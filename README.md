@@ -36,7 +36,7 @@ From the command line, navigate to the current directory, i.e. `capstone/`.
 Then, type `make build`. 
 The executable `lob` will be created in the directory `./build/`. 
 
-##User commands
+## User commands
 When the simulator is running, the user can submit Ask orders, submit Bid orders, interrupt the simulation:
 
 * Submission of Ask orders. The format of the command is `a [price level] [size]`. For example, type `a 100000 50` and press enter to submit an ask limit order for 50 shares at a price not smaller than  $1000.00 per share.
