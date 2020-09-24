@@ -2,7 +2,7 @@
 
 <img src="./example.png"  alt="drawing" width="1100"/>
 
-##Overview
+## Overview
 The project consists in the implementation of a simulator of a Limit Order Book ([https://www.investopedia.com/terms/o/order-book.asp](https://www.investopedia.com/terms/o/order-book.asp)).
 Prices are reported as integers, so you might think of 10^-2 US$ as the unit of accounting: a reported price of 100 amounts to 1US$. The unit of volumes can be assumed to be the number of shares. 
 
