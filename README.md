@@ -32,7 +32,7 @@ Notice that the file `./CMakeList` sets c++17 as standard.
 Make sure that  [ncurses](https://www.gnu.org/software/ncurses/) is installed and available. If not installed, a one-line fixer could be
 `sudo apt-get install libncurses5-dev libncursesw5-dev`.
 Make sure that you can compile with the flag -std++17. Recommended compiler is g++ version 8 or later.
-From the command line, navigate to the current directory, i.e. `capstone/`. 
+From the command line, navigate to the current directory, i.e. `simulob/`. 
 Then, type `make build`. 
 The executable `lob` will be created in the directory `./build/`. 
 
