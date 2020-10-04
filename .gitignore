@@ -1,1 +1,3 @@
 build/*
+simulob/build/*
+.ipynb_checkpoints/
