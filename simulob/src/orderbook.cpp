@@ -20,7 +20,7 @@ MatchRes OrderBook::match_orders(std::shared_ptr<Order>& order_1, std::shared_pt
       if ((order_1->direction()!=order_2->direction())&&(order_1->id()!=order_2->id())){
         std::shared_ptr<Order>& ask = (order_1->direction()==OrderDirection::ask)? order_1 : order_2;
         std::shared_ptr<Order>& bid = (order_1->direction()==OrderDirection::bid)? order_1 : order_2;
-        if((ask->id()==bid->id())||(ask->id()<0)||(bid->id()<0)) return res;
+        //if((ask->id()==bid->id())||(ask->id()<0)||(bid->id()<0)) return res;
         if (ask->price()<=bid->price()){
           res.transaction=true;
           res.transaction_size = std::min(ask->size(), bid->size());

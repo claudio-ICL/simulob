@@ -28,7 +28,7 @@ bool Order::operator<(const Order& other) const{
   if (_status!=other.status()){
     return _status==OrderStatus::queued;
   }
-  if ((_direction==other.direction())&(_price!=other.price())){
+  if ((_direction==other.direction())&&(_price!=other.price())){
     int sign = (_direction==OrderDirection::bid)? -1 : 1;
     int p = other.price();
     return sign*_price<sign*p;

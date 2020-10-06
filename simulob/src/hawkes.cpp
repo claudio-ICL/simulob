@@ -77,7 +77,6 @@ void HawkesProcess::simulate(){
     double intensity_total = total_intensity(intensities);
     double random_uniform = intensity_overall*uniform_distr(generator);
     if (random_uniform<intensity_total){
-    sleep10;
       std::discrete_distribution<int> distribution(intensities.begin(), intensities.end());
       int event = distribution(generator);
       add(time,event);
