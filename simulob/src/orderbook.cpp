@@ -206,10 +206,10 @@ void OrderQueue::erase_order(iterator& it){
   }
 }
 bool OrderQueue::update(){
-   std::lock_guard<std::mutex> lock(_mtx);
    //write("OrderQueue::update() direction=%d\n", _direction);
    bool cancellations{false};
    bool deletions{false};
+   std::lock_guard<std::mutex> lock(_mtx);
    for (iterator it = this->begin(); it!=this->end();){
        if (((*it)->status()!=OrderStatus::queued)||((*it)->size()<=0)){
          erase_order(it);
@@ -217,6 +217,14 @@ bool OrderQueue::update(){
        }
        else{
          bool cancelling = (*it)->update();
+         /*
+         if (it!=this->begin()){
+           int price = (*it)->price();
+           int prev_price = (*(it-1))->price(); 
+           if (price != prev_price){
+             _pricelevel[price] = it;
+           }
+          */
          ++it;
          cancellations = cancellations || cancelling;
        }
