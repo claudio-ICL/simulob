@@ -82,7 +82,7 @@ void StandingOrder::cancel(){
   }
 }
 bool StandingOrder::update(){
-  if (_status==OrderStatus::queued){
+  if ((_status==OrderStatus::queued)&&(_decayrate>0.0)){
       /*coefficient of exponential decay lambda is larger if the order is near the best price*/
       double lambda = _decayrate/(1+10*distance_from_refprice());
       auto t =std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - _timestamp).count();

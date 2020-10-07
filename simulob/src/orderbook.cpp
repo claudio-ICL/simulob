@@ -102,22 +102,20 @@ OrderQueue& OrderQueue::operator=(OrderQueue&& source){
 }
   
 void OrderQueue::add(std::shared_ptr<Order>&& order){
-    std::lock_guard<std::mutex> lock(_mtx);
   //write("OrderQueue:: add() direction=%d, order #%d \n", _direction, order->id());
   if (order){
     if (order->direction()==_direction){
       if (order->status()==OrderStatus::queued){
-        {
-          _volume+=order->size();
-          auto pos =
-            std::lower_bound(
-              this->begin(), this->end(),  
-              order, 
-              [](std::shared_ptr<Order> order_1, std::shared_ptr<Order> order_2)
-              {return *order_1 < *order_2;});
-          _bestprice.update(order);
-          this->insert(pos, order);
-        }
+        std::lock_guard<std::mutex> lock(_mtx);
+        _volume+=order->size();
+        auto pos =
+          std::lower_bound(
+            this->begin(), this->end(),  
+            order, 
+            [](std::shared_ptr<Order> order_1, std::shared_ptr<Order> order_2)
+            {return *order_1 < *order_2;});
+        _bestprice.update(order);
+        this->insert(pos, order);
       }
     }
   }
@@ -144,6 +142,7 @@ int OrderQueue::execute(std::shared_ptr<Order> order){
               mr.transaction_price, mr.transaction_size
           );
           trade+=mr.transaction_price*mr.transaction_size;
+          _volume -= mr.transaction_size;
         }
         if ((*it)->status()!=OrderStatus::queued)
           erase_order(it);
@@ -195,6 +194,7 @@ void OrderQueue::erase_order(iterator& it){
   if ((this->begin()<= it) && (it<this->end())){
     if (*it){
       //int id = (*it)->id();
+      _volume -= (*it)->size();
       it = this->erase(it);
       if (it!=this->end()){
         _bestprice.update(*it);
@@ -208,7 +208,6 @@ void OrderQueue::erase_order(iterator& it){
 bool OrderQueue::update(){
    std::lock_guard<std::mutex> lock(_mtx);
    //write("OrderQueue::update() direction=%d\n", _direction);
-   _volume=0;
    bool cancellations{false};
    bool deletions{false};
    for (iterator it = this->begin(); it!=this->end();){
@@ -218,7 +217,6 @@ bool OrderQueue::update(){
        }
        else{
          bool cancelling = (*it)->update();
-         _volume+=(*it)->active_size();
          ++it;
          cancellations = cancellations || cancelling;
        }
