@@ -11,7 +11,7 @@
 #include<algorithm>
 int main (){
   std::shared_ptr<OrderBook> ob = std::make_shared<OrderBook>(100, 100000, 100500);
-  double decayrate=0.0000001;
+  double decayrate=0.00000003;
   std::shared_ptr<OrderSubmission> osub = std::make_shared<OrderSubmission>(ob, decayrate);
   osub->hawkes.baserate(std::vector<double>{0.3,0.3});
   osub->hawkes.impactcoef(std::vector<std::vector<double>>{{0.5,0.3},{0.3,0.5}});

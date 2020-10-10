@@ -130,7 +130,9 @@ int OrderQueue::execute(std::shared_ptr<Order> order){
       std::string order_side = order->side();
       for(
         auto it = this->begin();
-        (order->status()!=OrderStatus::executed) && (it!=this->end());
+        (order->status()!=OrderStatus::executed) && (it!=this->end()) &&
+        (_direction * order->price() <= _direction * (*it)->price()) //_direction is either 1 (bid queue) or -1 (ask queue)
+        ;
       ){
         int id = (*it)->id();
         std::string side = (*it)->side();
