@@ -17,9 +17,9 @@ int main() {
       std::make_shared<OrderSubmission>(ob, decayrate);
   osub->hawkes.baserate(std::vector<double>{0.1, 0.1});
   osub->hawkes.impactcoef(
-      std::vector<std::vector<double>>{{0.5, 0.03}, {0.03, 0.5}});
+      std::vector<std::vector<double>>{{0.75, 0.03}, {0.03, 0.5}});
   osub->hawkes.decaycoef(
-      std::vector<std::vector<double>>{{2.5, 2.5}, {2.5, 2.5}});
+      std::vector<std::vector<double>>{{2.40, 2.5}, {2.5, 2.5}});
   osub->hawkes.set_timeorigin(0.0);
   {
     int status_y = 1;
